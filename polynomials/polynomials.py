@@ -168,8 +168,7 @@ class Polynomial:
         numtrm = len(other.coeffs)
         coeffs = other.coeffs
         for i in range(len(coeffs)):
-            intrprod = self.mult_by_term(coeffs[i], numtrm - 1 - i)
-            p3 += intrprod
+            p3 += self.mult_by_term(coeffs[i], numtrm - 1 - i)
 
         not_zero = 0
         while p3.coeffs[not_zero] == 0:
