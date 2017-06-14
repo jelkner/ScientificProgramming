@@ -54,7 +54,7 @@ class Polynomial(tuple):
             'x' if e > 0 else '',
             ('^' + str(e)) if e > 1 else '')
                        for e, c in sorted(
-                           l.items(),
+                           sl.items(),
                            key=operator.itemgetter(0),
                            reverse=True)
                       )

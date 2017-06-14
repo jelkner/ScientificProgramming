@@ -166,7 +166,11 @@ class Polynomial:
         numtrm = len(other.coeffs)
         coeffs = other.coeffs
         for i in range(len(coeffs)):
+<<<<<<< HEAD
             prod += self.mult_by_term(coeffs[i], numtrm - 1 - i)
+=======
+            p3 += self.mult_by_term(coeffs[i], numtrm - 1 - i)
+>>>>>>> ffd844aa062f1c0d9dcc4170776ad021739401cd
 
         not_zero = 0
         while prod.coeffs[not_zero] == 0:
