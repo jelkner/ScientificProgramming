@@ -39,14 +39,14 @@ class Polynomial(tuple):
 
     def __str__(self):
         """ This is a mess """
-        l = {e: ('{:+}'.format(c)[0] + ' ', abs(c)) for
-             e, c in self.todict().items()}
-        if not l:
+        sl = {e: ('{:+}'.format(c)[0] + ' ', abs(c)) for
+              e, c in self.todict().items()}
+        if not sl:
             return ''
 
-        largest = l[max(l)]
+        largest = sl[max(sl)]
         largest = largest[0][0] if largest[0][0] is '-' else '', largest[1]
-        l[max(l)] = largest
+        sl[max(sl)] = largest
 
         return ' '.join('{}{}{}{}'.format(
             c[0],
