@@ -6,10 +6,8 @@ class Polynomial:
       >>> p = Polynomial((3, 4, 1))
       >>> p.coeffs
       (3, 4, 1)
-    """
-    """
-      >>> p.poly_to_str()
-      '3x^2 + 4x + 1'
+      >>> p
+      3x^2 + 4x + 1
     """
     def __init__(self, coeffs=(0,)):
         self.coeffs = coeffs
@@ -145,38 +143,75 @@ class Polynomial:
 
         return Polynomial(tuple(prod))
 
-    def mul_polys(self, other):
+    def __mul__(self, other):
         """
           >>> p1 = Polynomial((4, -5))
           >>> p2 = Polynomial((2, 3, -6))
-          >>> p1.mul_polys(p2).coeffs
+          >>> (p1 * p2).coeffs
           (8, 2, -39, 30)
           >>> p3 = Polynomial((0, 4))
           >>> p4 = Polynomial((4, 0))
-          >>> p3.mul_polys(p4).coeffs
+          >>> (p3 * p4).coeffs
           (16, 0)
           >>> p5 = Polynomial((4, 0, 5, 3))
           >>> p6 = Polynomial((7, 4, 0, 5))
-          >>> p5.mul_polys(p6).coeffs
+          >>> (p5 * p6).coeffs
           (28, 16, 35, 61, 12, 25, 15)
           >>> p7 = Polynomial((-4, 3))
           >>> p8 = Polynomial((7, 5))
-          >>> p7.mul_polys(p8).coeffs
+          >>> (p7 * p8).coeffs
           (-28, 1, 15)
         """
-        p3 = Polynomial() 
+        prod = Polynomial()
         numtrm = len(other.coeffs)
         coeffs = other.coeffs
         for i in range(len(coeffs)):
-            intrprod = self.mult_by_term(coeffs[i], numtrm - 1 - i)
-            p3 += intrprod
+            prod += self.mult_by_term(coeffs[i], numtrm - 1 - i)
 
         not_zero = 0
-        while p3.coeffs[not_zero] == 0:
+        while prod.coeffs[not_zero] == 0:
             not_zero += 1
-        p3.coeffs = p3.coeffs[not_zero:]
+        prod.coeffs = prod.coeffs[not_zero:]
 
-        return p3
+        return prod
+
+    def __len__(self):
+        """
+          >>> p1 = Polynomial((3, 5, 6))
+          >>> len(p1)
+          3
+        """
+        return len(self.coeffs)
+
+    def __call__(self, x):
+        """
+          >>> p1 = Polynomial((3, 2, -6))
+          >>> p1(5)
+          79
+        """
+        r = 0
+
+        for i in range(len(self)):
+            r += self.coeffs[i] * x ** (len(self) - i - 1)
+
+        return r
+
+    def __neg__(self):
+        """
+          >>> p = Polynomial((6, -2, 5))
+          >>> (-p).coeffs
+          (-6, 2, -5)
+        """
+        return Polynomial(tuple([-coeff for coeff in self.coeffs]))
+
+    def __sub__(self, other):
+        """
+          >>> p1 = Polynomial((3, 5, 1))
+          >>> p2 = Polynomial((2, 8, 3, 7))
+          >>> (p1 - p2).coeffs
+          (-2, -5, 2, -6)
+        """
+        return self + -other
 
 
 if __name__ == '__main__':
